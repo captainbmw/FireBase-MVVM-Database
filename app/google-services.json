@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1030838664195",
+    "project_id": "captainbm",
+    "storage_bucket": "captainbm.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1030838664195:android:5972a982d585fb90b82236",
+        "android_client_info": {
+          "package_name": "com.bmw.firebase"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCROkxU7i4FiaUZKjnJbhS96DCV2aGZT84"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
