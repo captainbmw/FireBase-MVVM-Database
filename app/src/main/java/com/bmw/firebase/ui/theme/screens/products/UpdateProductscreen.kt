@@ -1,12 +1,14 @@
 package com.bmw.firebase.ui.theme.screens.products
 
-import android.content.res.Configuration
 import android.widget.Toast
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.OutlinedTextField
@@ -41,21 +43,24 @@ import com.google.firebase.database.ValueEventListener
 
 @Composable
 fun UpdateProductsScreen(navController: NavHostController,id:String) {
-    Column(modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
-        var context = LocalContext.current
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .background(Color.Cyan),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
+        val context = LocalContext.current
         var name by remember { mutableStateOf("") }
         var quantity by remember { mutableStateOf("") }
         var price by remember { mutableStateOf("") }
 
-        var currentDataRef = FirebaseDatabase.getInstance().getReference()
+        val currentDataRef = FirebaseDatabase.getInstance().getReference()
             .child("Products/$id")
         currentDataRef.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                var product = snapshot.getValue(Product::class.java)
+                val product = snapshot.getValue(Product::class.java)
                 name = product!!.name
-                quantity = product!!.quantity
-                price = product!!.price
+                quantity = product.quantity
+                price = product.price
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -81,6 +86,7 @@ fun UpdateProductsScreen(navController: NavHostController,id:String) {
             value = productName,
             onValueChange = { productName = it },
             label = { Text(text = "Product name *") },
+            shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
@@ -90,6 +96,7 @@ fun UpdateProductsScreen(navController: NavHostController,id:String) {
             value = productQuantity,
             onValueChange = { productQuantity = it },
             label = { Text(text = "Product quantity *") },
+            shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
@@ -99,6 +106,7 @@ fun UpdateProductsScreen(navController: NavHostController,id:String) {
             value = productPrice,
             onValueChange = { productPrice = it },
             label = { Text(text = "Product price *") },
+            shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
@@ -106,7 +114,7 @@ fun UpdateProductsScreen(navController: NavHostController,id:String) {
 
         Button(onClick = {
 //            -----------WRITE THE UPDATE LOGIC HERE---------------//
-            var productRepository = productviewmodel(navController, context)
+            val productRepository = productviewmodel(navController, context)
             productRepository.updateProduct(productName.text.trim(),productQuantity.text.trim(),
                 productPrice.text.trim(),id)
 
@@ -120,6 +128,6 @@ fun UpdateProductsScreen(navController: NavHostController,id:String) {
 
 @Preview
 @Composable
-fun update() {
+fun Update() {
     UpdateProductsScreen(rememberNavController(), id = "")
 }

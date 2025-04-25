@@ -20,7 +20,6 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import coil.compose.rememberAsyncImagePainter
 import com.bmw.firebase.data.productviewmodel
 import com.bmw.firebase.model.Upload
 import com.bmw.firebase.navigation.ROUTE_UPDATE_PRODUCT
@@ -79,11 +78,11 @@ fun UploadItem(name:String, quantity:String, price:String, imageUrl:String, id:S
         Text(text = name)
         Text(text = quantity)
         Text(text = price)
-        Image(
-            painter = rememberAsyncImagePainter(imageUrl),
-            contentDescription = null,
-            modifier = Modifier.size(128.dp)
-        )
+//        Image(
+//            painter = rememberAsyncImagePainter(imageUrl),
+//            contentDescription = null,
+//            modifier = Modifier.size(128.dp)
+//        )
 
         Button(onClick = {
             productRepository.deleteProduct(id)

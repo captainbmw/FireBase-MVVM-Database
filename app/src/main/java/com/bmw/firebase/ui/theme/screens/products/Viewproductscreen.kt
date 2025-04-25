@@ -1,5 +1,7 @@
 package com.bmw.firebase.ui.theme.screens.products
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,6 +10,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 
 
@@ -33,7 +37,8 @@ import com.bmw.firebase.navigation.ROUTE_UPDATE_PRODUCT
 @Composable
 fun ViewProductsScreen(navController:NavHostController) {
     Column(modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
 
         var context = LocalContext.current
         var productRepository = productviewmodel(navController, context)
@@ -49,13 +54,14 @@ fun ViewProductsScreen(navController:NavHostController) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(text = "All products",
-                fontSize = 30.sp,
+                fontSize = 45.sp,
                 fontFamily = FontFamily.Cursive,
-                color = Color.Red)
+                color = Color.Blue)
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            LazyColumn(){
+            LazyColumn(verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally){
                 items(products){
                     ProductItem(
                         name = it.name,
@@ -77,19 +83,28 @@ fun ProductItem(name:String, quantity:String, price:String, id:String,
                 navController:NavHostController, productRepository: productviewmodel
 ) {
 
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .background(Color.Cyan),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally) {
         Text(text = name)
         Text(text = quantity)
         Text(text = price)
         Button(onClick = {
             productRepository.deleteProduct(id)
-        }) {
-            Text(text = "Delete")
+        },
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+        ) {
+            Text(text = "Delete",
+                color = Color.Blue)
         }
         Button(onClick = {
             navController.navigate(ROUTE_UPDATE_PRODUCT+"/$id")
-        }) {
-            Text(text = "Update")
+        },
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)) {
+            Text(text = "Update",
+                color = Color.Cyan)
         }
     }
 

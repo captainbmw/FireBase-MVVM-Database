@@ -8,8 +8,11 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 
@@ -40,7 +43,8 @@ import com.bmw.firebase.navigation.ROUTE_VIEW_PRODUCT
 @Composable
 fun AddProductsScreen(navController: NavHostController) {
     Column(modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally) {
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center) {
         var context = LocalContext.current
         Text(
             text = "Add product",
@@ -60,6 +64,7 @@ fun AddProductsScreen(navController: NavHostController) {
             value = productName,
             onValueChange = { productName = it },
             label = { Text(text = "Product name *") },
+            shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
@@ -69,6 +74,7 @@ fun AddProductsScreen(navController: NavHostController) {
             value = productQuantity,
             onValueChange = { productQuantity = it },
             label = { Text(text = "Product quantity *") },
+            shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
@@ -78,17 +84,18 @@ fun AddProductsScreen(navController: NavHostController) {
             value = productPrice,
             onValueChange = { productPrice = it },
             label = { Text(text = "Product price *") },
+            shape = RoundedCornerShape(16.dp),
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(onClick = {
-            //-----------WRITE THE SAVE LOGIC HERE---------------//
-//            val productRepository = productviewmodel(navController,context)
-//            productRepository.saveProduct(productName.text.trim(),productQuantity.text.trim(),
-//                productPrice.text)
-//            navController.navigate(ROUTE_VIEW_PRODUCT)
+//            -----------WRITE THE SAVE LOGIC HERE---------------//
+            val productRepository = productviewmodel(navController,context)
+            productRepository.saveProduct(productName.text.trim(),productQuantity.text.trim(),
+                productPrice.text)
+            navController.navigate(ROUTE_VIEW_PRODUCT)
 
 
         }) {
@@ -130,9 +137,11 @@ fun ImagePicker(modifier: Modifier = Modifier, context: Context, navController: 
                 onClick = {
                     imagePicker.launch("image/*")
                 },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
             ) {
                 Text(
-                    text = "Select Image"
+                    text = "Select Image",
+                    color = Color.White
                 )
             }
 
@@ -144,8 +153,10 @@ fun ImagePicker(modifier: Modifier = Modifier, context: Context, navController: 
                 productRepository.saveProductWithImage(name, quantity, price,imageUri!!)
 
 
-            }) {
-                Text(text = "Upload")
+            },
+                colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)) {
+                Text(text = "Upload",
+                    color = Color.White)
             }
         }
     }
